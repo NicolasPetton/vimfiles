@@ -164,6 +164,7 @@ function! s:ReadMan(arg)
   setlocal noswapfile
   setlocal nowrap
   setlocal nomodifiable
+  setlocal filetype=man
 
 endfunction
 
