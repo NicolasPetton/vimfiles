@@ -81,6 +81,11 @@ cmap w!! %!sudo tee > /dev/null %
 "inoremap <C-a> <esc>^i
 "inoremap <C-e> <esc>A
 
+"Clear highlight and redraw
+nnoremap <C-L> :nohls<CR><C-L>
+inoremap <C-L> <esc>:nohls<CR>i
+
+
 "Keep the visual selection when using < and >
 vmap < <gv
 vmap > >gv
@@ -134,6 +139,36 @@ nmap <leader>l :set list!<CR>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
+"
+" Read manpages from VIM
+"
+
+function! ReadMan(arg)
+
+  " Open a new window
+  wincmd n
+
+  " Read in the manpage for arg (col -b is for formatting):
+  exe ":r! man " . a:arg . " | col -b"
+
+  " Goto first line and delete it
+  goto
+  delete
+
+  " Set the buffer properties
+
+  let name = a:arg . "(MANPAGE)"
+  silent exe "file " . name
+
+  setlocal buftype=nofile
+  setlocal noswapfile
+  setlocal nowrap
+  setlocal nomodifiable
+
+endfunction
+
+" command! Man :call s:ReadMan('less')
+command! -nargs=1 -complete=shellcmd Man call ReadMan(<q-args>)
 
 
 " only if GUI running         
