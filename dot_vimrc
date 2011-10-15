@@ -167,7 +167,6 @@ function! ReadMan(arg)
 
 endfunction
 
-" command! Man :call s:ReadMan('less')
 command! -nargs=1 -complete=shellcmd Man call ReadMan(<q-args>)
 
 
