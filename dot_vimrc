@@ -143,7 +143,7 @@ set listchars=tab:▸\ ,eol:¬
 " Read manpages from VIM
 "
 
-function! ReadMan(arg)
+function! s:ReadMan(arg)
 
   " Open a new window
   wincmd n
@@ -157,8 +157,8 @@ function! ReadMan(arg)
 
   " Set the buffer properties
 
-  let name = a:arg . "(MANPAGE)"
-  silent exe "file " . name
+  let s:name = a:arg . "(MANPAGE)"
+  silent exe "file " . s:name
 
   setlocal buftype=nofile
   setlocal noswapfile
@@ -167,7 +167,7 @@ function! ReadMan(arg)
 
 endfunction
 
-command! -nargs=1 -complete=shellcmd Man call ReadMan(<q-args>)
+command! -nargs=1 -complete=shellcmd Man call s:ReadMan(<q-args>)
 
 
 " only if GUI running         
