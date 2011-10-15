@@ -33,6 +33,7 @@ set pastetoggle=<F2>              " make paste easy
 
 set showmatch                     " show matching brackets
 set showmode                      " Show current vim mode
+set showcmd                       "show incomplete cmds down the bottom
 set tabstop=4                     " Set tabs to 4
 set shiftwidth=4                  " related
 set hidden                        " you can change buffers without saving
@@ -56,6 +57,12 @@ set ruler                         " Show cursor position.
 set laststatus=2                  " always show the status line
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+
+"Permanent undo
+if v:version >= 703
+    set undodir=~/.vim/undofiles
+    set undofile
+endif
 
 " colorscheme desert
 colorscheme topfunky-light
