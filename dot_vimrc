@@ -1,0 +1,153 @@
+set nocompatible
+set autoindent
+
+
+" Pathogen
+" 
+" Use :Helptags to run :helptags on every doc/ directory in your
+" 'runtimepath'. 
+call pathogen#infect() 
+call pathogen#helptags() 
+
+
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+
+" reload .vimrc file when saving it
+autocmd! bufwritepost .vimrc source $MYVIMRC
+
+set scrolloff=3                   "Show 3 lines of context around the cursor
+
+set nobackup
+set nowritebackup
+set directory=$HOME/.vim/tmp//,.  " keep swap files in one place
+set autochdir                     " Change to the current file directory
+
+set mouse=a                       " use mouse everywhere
+set ruler                         " show cursor position in status bar
+set number                        " Show line numbers.
+set noerrorbells                  " don't make noise
+set pastetoggle=<F2>              " make paste easy
+
+set showmatch                     " show matching brackets
+set showmode                      " Show current vim mode
+set tabstop=4                     " Set tabs to 4
+set shiftwidth=4                  " related
+set hidden                        " you can change buffers without saving
+
+set pastetoggle=<F2>              " make paste easy
+set hlsearch                      " search highlighting
+set incsearch                     " incremental search
+
+set scrolloff=3                   "leave 3 lines when moving screen
+set title                         " Set the terminal's title
+
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+
+set ruler                         " Show cursor position.
+
+
+set laststatus=2                  " always show the status line
+" Useful status information at bottom of screen
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+
+" colorscheme desert
+colorscheme topfunky-light
+
+
+" mappings
+
+let mapleader = ","               " The default leader is '\'
+cmap w!! %!sudo tee > /dev/null %
+
+"Edit files from the same dir as the current file
+"cmap e!! e <C-R>=expand("%:p:h") . "/" <CR>
+
+" some Emacs-like keybindings. This may be confusing
+"inoremap <C-a> <esc>^i
+"inoremap <C-e> <esc>A
+
+"Keep the visual selection when using < and >
+vmap < <gv
+vmap > >gv
+
+"Use <TAB> and <S-TAB> for indenting in visual mode too
+vmap <TAB> >
+vmap <S-TAB> <
+
+"...and in normal mode
+nmap <tab> >>
+nmap <S-tab> <<
+
+"Clever tabs
+"See :h ins-completion
+function! CleverTab()
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+	return "\<Tab>"
+  else
+	return "\<C-N>"
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+
+" stay away from insert mode
+"inoremap <LEFT> <NOP>
+"inoremap <RIGHT> <NOP>
+"inoremap <UP> <NOP>
+"inoremap <DOWN> <NOP>
+
+" learn hjkl!
+noremap <LEFT> <NOP>
+noremap <RIGHT> <NOP>
+noremap <UP> <NOP>
+noremap <DOWN> <NOP>
+
+"FuzzyFinder
+nmap <Leader>fe :FufFileWithCurrentBufferDir<enter>
+nmap <Leader>fb :FufBuffer<enter>
+
+
+"Tabularize
+if exists(":Tabularize")
+  nmap <Leader>t= :Tabularize /=<CR>
+  vmap <Leader>t= :Tabularize /=<CR>
+  nmap <Leader>t: :Tabularize /:\zs<CR>
+  vmap <Leader>t: :Tabularize /:\zs<CR>
+endif
+
+"Show/hide invisible characters
+nmap <leader>l :set list!<CR>
+ 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+
+
+
+" only if GUI running         
+if has("gui_running")
+	"colorscheme desert
+	set visualbell            " don't make noise
+	set cursorline            " highlight current line
+	set guifont=monospace\ 10
+	set guioptions-=r         "remove the right-hand scrollbar
+	"set guioptions-=m        "remove the menubar
+	set guioptions-=T         "remove the toolbar
+endif
+
+
+" Smalltalk files
+au FileType st call FT_st()
+
+function! FT_st()
+	set tabstop=8
+	set softtabstop=4
+	set shiftwidth=4
+	set noexpandtab
+	retab 8
+endfunction
+
