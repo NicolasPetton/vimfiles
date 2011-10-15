@@ -101,11 +101,11 @@ nmap <S-tab> <<
 "Clever tabs
 "See :h ins-completion
 function! CleverTab()
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-	return "\<Tab>"
-  else
-	return "\<C-N>"
-endfunction
+	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<Tab>"
+	else
+		return "\<C-N>"
+	endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
 " stay away from insert mode
@@ -127,15 +127,15 @@ nmap <Leader>fb :FufBuffer<enter>
 
 "Tabularize
 if exists(":Tabularize")
-  nmap <Leader>t= :Tabularize /=<CR>
-  vmap <Leader>t= :Tabularize /=<CR>
-  nmap <Leader>t: :Tabularize /:\zs<CR>
-  vmap <Leader>t: :Tabularize /:\zs<CR>
+	nmap <Leader>t= :Tabularize /=<CR>
+	vmap <Leader>t= :Tabularize /=<CR>
+	nmap <Leader>t: :Tabularize /:\zs<CR>
+	vmap <Leader>t: :Tabularize /:\zs<CR>
 endif
 
 "Show/hide invisible characters
 nmap <leader>l :set list!<CR>
- 
+
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
@@ -145,26 +145,26 @@ set listchars=tab:▸\ ,eol:¬
 
 function! s:ReadMan(arg)
 
-  " Open a new window
-  wincmd n
+	" Open a new window
+	wincmd n
 
-  " Read in the manpage for arg (col -b is for formatting):
-  exe ":r! man " . a:arg . " | col -b"
+	" Read in the manpage for arg (col -b is for formatting):
+	exe ":r! man " . a:arg . " | col -b"
 
-  " Goto first line and delete it
-  goto
-  delete
+	" Goto first line and delete it
+	goto
+	delete
 
-  " Set the buffer properties
+	" Set the buffer properties
 
-  let s:name = a:arg . "(MANPAGE)"
-  silent exe "file " . s:name
+	let s:name = a:arg . "(MANPAGE)"
+	silent exe "file " . s:name
 
-  setlocal buftype=nofile
-  setlocal noswapfile
-  setlocal nowrap
-  setlocal nomodifiable
-  setlocal filetype=man
+	setlocal buftype=nofile
+	setlocal noswapfile
+	setlocal nowrap
+	setlocal nomodifiable
+	setlocal filetype=man
 
 endfunction
 
