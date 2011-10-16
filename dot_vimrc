@@ -59,7 +59,7 @@ set wildmode=list:longest         " Complete files like a shell.
 
 set history=1000                  " Longer history
 
-if v:version >= 703               " Uses the X11 clipboard as the default register.
+if v:version >= 700               " Uses the X11 clipboard as the default register.
 	set clipboard=unnamed         " Only works in X11/Win with a vim compiled with '+xterm_clipboard'
 endif
 
