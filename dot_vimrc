@@ -83,7 +83,7 @@ cmap w!! %!sudo tee > /dev/null %
 "cmap e!! e <C-R>=expand("%:p:h") . "/" <CR>
 
 " some Emacs-like keybindings. This may be confusing
-"inoremap <C-a> <esc>^i
+"inoremap <C-a> <esc>I
 "inoremap <C-e> <esc>A
 
 "Clear highlight and redraw
