@@ -1,5 +1,4 @@
 set nocompatible
-set autoindent
 
 
 " Pathogen
@@ -22,9 +21,19 @@ set scrolloff=3                   "Show 3 lines of context around the cursor
 
 set nobackup
 set nowritebackup
-set directory=$HOME/.vim/tmp//,.  " keep swap files in one place
-set autochdir                     " Change to the current file directory
 
+"Create ~/.vim/tmp/ and ~/.vim/undofiles/ if necessary
+set directory=$HOME/.vim/tmp//,.  " keep swap files in one place
+
+"Permanent undo
+if v:version >= 703
+    set undodir=~/.vim/undofiles
+    set undofile
+endif
+
+set autochdir                     " Change the current dir to the current file directory
+
+set autoindent                    " automatic indentation
 set mouse=a                       " use mouse everywhere
 set ruler                         " show cursor position in status bar
 set number                        " Show line numbers.
@@ -57,18 +66,9 @@ endif
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
 
-set ruler                         " Show cursor position.
-
-
 set laststatus=2                  " always show the status line
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
-
-"Permanent undo
-if v:version >= 703
-    set undodir=~/.vim/undofiles
-    set undofile
-endif
 
 " colorscheme desert
 colorscheme topfunky-light
