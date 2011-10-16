@@ -49,6 +49,11 @@ set wildmenu                      " Enhanced command line completion.
 set wildmode=list:longest         " Complete files like a shell.
 
 set history=1000                  " Longer history
+
+if v:version >= 703               " Uses the X11 clipboard as the default register.
+	set clipboard=unnamedplus     " Only works in linux with a vim compiled with '+xterm_clipboard'
+endif
+
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
 
@@ -142,33 +147,34 @@ set listchars=tab:▸\ ,eol:¬
 "
 " Read manpages from VIM
 "
-
-function! s:ReadMan(arg)
-
-	" Open a new window
-	wincmd n
-
-	" Read in the manpage for arg (col -b is for formatting):
-	exe ":r! man " . a:arg . " | col -b"
-
-	" Goto first line and delete it
-	goto
-	delete
-
-	" Set the buffer properties
-
-	let s:name = a:arg . "(MANPAGE)"
-	silent exe "file " . s:name
-
-	setlocal buftype=nofile
-	setlocal noswapfile
-	setlocal nowrap
-	setlocal nomodifiable
-	setlocal filetype=man
-
-endfunction
-
-command! -nargs=1 -complete=shellcmd Man call s:ReadMan(<q-args>)
+runtime ftplugin/man.vim
+" 
+" function! s:ReadMan(arg)
+" 
+" 	" Open a new window
+" 	wincmd n
+" 
+" 	" Read in the manpage for arg (col -b is for formatting):
+" 	exe ":r! man " . a:arg . " | col -b"
+" 
+" 	" Goto first line and delete it
+" 	goto
+" 	delete
+" 
+" 	" Set the buffer properties
+" 
+" 	let s:name = a:arg . "(MANPAGE)"
+" 	silent exe "file " . s:name
+" 
+" 	setlocal buftype=nofile
+" 	setlocal noswapfile
+" 	setlocal nowrap
+" 	setlocal nomodifiable
+" 	setlocal filetype=man
+" 
+" endfunction
+" 
+" command! -nargs=1 -complete=shellcmd Man call s:ReadMan(<q-args>)
 
 
 " only if GUI running         
