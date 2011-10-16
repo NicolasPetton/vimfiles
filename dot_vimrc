@@ -60,7 +60,7 @@ set wildmode=list:longest         " Complete files like a shell.
 set history=1000                  " Longer history
 
 if v:version >= 703               " Uses the X11 clipboard as the default register.
-	set clipboard=unnamedplus     " Only works in linux with a vim compiled with '+xterm_clipboard'
+	set clipboard=unnamed         " Only works in X11/Win with a vim compiled with '+xterm_clipboard'
 endif
 
 set ignorecase                    " Case-insensitive searching.
@@ -177,7 +177,7 @@ runtime ftplugin/man.vim
 " command! -nargs=1 -complete=shellcmd Man call s:ReadMan(<q-args>)
 
 
-" only if GUI running         
+" only if GUI running
 if has("gui_running")
 	"colorscheme desert
 	set visualbell            " don't make noise
