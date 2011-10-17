@@ -71,13 +71,15 @@ set laststatus=2                  " always show the status line
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 " colorscheme desert
+" 256 colors in terminal
+set t_Co=256
 colorscheme topfunky-light
 
 
 " mappings
 
 let mapleader = ","               " The default leader is '\'
-cmap w!! %!sudo tee > /dev/null %
+cnoremap w!! %!sudo tee > /dev/null %
 
 "Edit files from the same dir as the current file
 "cmap e!! e <C-R>=expand("%:p:h") . "/" <CR>
@@ -92,16 +94,19 @@ inoremap <C-L> <esc>:nohls<CR>i
 
 
 "Keep the visual selection when using < and >
-vmap < <gv
-vmap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 "Use <TAB> and <S-TAB> for indenting in visual mode too
-vmap <TAB> >
-vmap <S-TAB> <
+vnoremap <TAB> >
+vnoremap <S-TAB> <
 
 "...and in normal mode
-nmap <tab> >>
-nmap <S-tab> <<
+nnoremap <tab> >>
+nnoremap <S-tab> <<
+
+" esc with jk
+inoremap jk <esc>
 
 "Clever tabs
 "See :h ins-completion
@@ -110,7 +115,7 @@ function! CleverTab()
 		return "\<Tab>"
 	else
 		return "\<C-N>"
-	endfunction
+endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
 " stay away from insert mode
@@ -126,20 +131,20 @@ noremap <UP> <NOP>
 noremap <DOWN> <NOP>
 
 "FuzzyFinder
-nmap <Leader>fe :FufFileWithCurrentBufferDir<enter>
-nmap <Leader>fb :FufBuffer<enter>
+nnoremap <Leader>fe :FufFileWithCurrentBufferDir<enter>
+nnoremap <Leader>fb :FufBuffer<enter>
 
 
 "Tabularize
 if exists(":Tabularize")
-	nmap <Leader>t= :Tabularize /=<CR>
-	vmap <Leader>t= :Tabularize /=<CR>
-	nmap <Leader>t: :Tabularize /:\zs<CR>
-	vmap <Leader>t: :Tabularize /:\zs<CR>
+	nnoremap <Leader>t= :Tabularize /=<CR>
+	vnoremap <Leader>t= :Tabularize /=<CR>
+	nnoremap <Leader>t: :Tabularize /:\zs<CR>
+	vnoremap <Leader>t: :Tabularize /:\zs<CR>
 endif
 
 "Show/hide invisible characters
-nmap <leader>l :set list!<CR>
+nnoremap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
@@ -190,7 +195,7 @@ endif
 
 
 " Smalltalk files
-au FileType st call FT_st()
+autocmd FileType st call FT_st()
 
 function! FT_st()
 	set tabstop=8
@@ -200,3 +205,45 @@ function! FT_st()
 	retab 8
 endfunction
 
+autocmd Filetype tex call s:init_tex()
+
+function! s:init_tex()
+	call s:define_commands()
+	call s:define_mappings()
+endfunction
+
+function! s:define_commands()
+	command! -nargs=0 -buffer LXPDFLatex call s:pdflatex()
+	command! -nargs=0 -buffer LXViewPDF call s:view_pdf()
+endfunction
+
+function! s:define_mappings()
+	nnoremap <buffer> <leader>cc :LXPDFLatex<CR>
+	nnoremap <buffer> <leader>cv :LXViewPDF<CR>
+endfunction
+
+function! s:pdflatex()
+	let s:result = system("pdflatex " . expand("%"))
+	let s:valid_output = "Output written on"
+	let s:valid = matchstr(s:result, s:valid_output)
+	if empty(s:valid)
+		call s:show_error(s:result)
+	endif
+endfunction
+
+function! s:view_pdf()
+	let s:filename = expand("%:r") . ".pdf"
+	call system("evince " . s:filename)
+endfunction
+
+function! s:show_error(error) 
+ 	" Open a new window
+ 	wincmd n
+ 	" Set the buffer properties
+ 	silent exe "file Latex(error)"
+	call append(0, split(a:error, '\n'))
+ 	setlocal buftype=nofile
+ 	setlocal noswapfile
+ 	setlocal nowrap
+ 	setlocal nomodifiable
+endfunction
