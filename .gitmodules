@@ -1,21 +1,27 @@
 [submodule "vim/bundle-available/vim-fugitive"]
-	path = dot_vim/bundle-available/vim-fugitive
+	path = vim/bundle-available/vim-fugitive
 	url = http://github.com/tpope/vim-fugitive.git
 [submodule "vim/bundle-available/vim-git"]
-	path = dot_vim/bundle-available/vim-git
+	path = vim/bundle-available/vim-git
 	url = https://github.com/tpope/vim-git.git
 [submodule "vim/bundle-available/ack"]
-	path = dot_vim/bundle-available/ack
+	path = vim/bundle-available/ack
 	url = https://github.com/mileszs/ack.vim.git
 [submodule "vim/bundle-available/fuzzyfinder"]
-	path = dot_vim/bundle-available/fuzzyfinder
+	path = vim/bundle-available/fuzzyfinder
 	url = https://github.com/vim-scripts/FuzzyFinder.git
 [submodule "vim/bundle-available/bufexplorer"]
-	path = dot_vim/bundle-available/bufexplorer
+	path = vim/bundle-available/bufexplorer
 	url = https://github.com/vim-scripts/bufexplorer.zip.git
 [submodule "vim/bundle-available/l9"]
-	path = dot_vim/bundle-available/l9
+	path = vim/bundle-available/l9
 	url = https://github.com/vim-scripts/L9.git
 [submodule "vim/bundle-available/tabular"]
-	path = dot_vim/bundle-available/tabular
+	path = vim/bundle-available/tabular
 	url = https://github.com/godlygeek/tabular.git
+[submodule "vim/bundle-available/Gundo"]
+	path = vim/bundle-available/Gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "vim/bundle-available/vim-surround"]
+	path = vim/bundle-available/vim-surround
+	url = https://github.com/tpope/vim-surround.git

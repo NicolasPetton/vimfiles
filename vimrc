@@ -2,11 +2,11 @@ set nocompatible
 
 
 " Pathogen
-" 
+"
 " Use :Helptags to run :helptags on every doc/ directory in your
-" 'runtimepath'. 
-call pathogen#infect() 
-call pathogen#helptags() 
+" 'runtimepath'.
+call pathogen#infect()
+call pathogen#helptags()
 
 
 filetype on
@@ -72,8 +72,7 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*Cap
 
 " colorscheme desert
 " 256 colors in terminal
-set t_Co=256
-colorscheme topfunky-light
+" set t_Co=256
 
 
 " mappings
@@ -98,8 +97,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 "Use <TAB> and <S-TAB> for indenting in visual mode too
-vnoremap <TAB> >
-vnoremap <S-TAB> <
+vmap <TAB> >
+vmap <S-TAB> <
 
 "...and in normal mode
 nnoremap <tab> >>
@@ -125,10 +124,10 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 "inoremap <DOWN> <NOP>
 
 " learn hjkl!
-noremap <LEFT> <NOP>
-noremap <RIGHT> <NOP>
-noremap <UP> <NOP>
-noremap <DOWN> <NOP>
+"noremap <LEFT> <NOP>
+"noremap <RIGHT> <NOP>
+"noremap <UP> <NOP>
+"noremap <DOWN> <NOP>
 
 "FuzzyFinder
 nnoremap <Leader>fe :FufFileWithCurrentBufferDir<enter>
@@ -147,52 +146,22 @@ endif
 nnoremap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:☠
 
-"
 " Read manpages from VIM
-"
 runtime ftplugin/man.vim
-" 
-" function! s:ReadMan(arg)
-" 
-" 	" Open a new window
-" 	wincmd n
-" 
-" 	" Read in the manpage for arg (col -b is for formatting):
-" 	exe ":r! man " . a:arg . " | col -b"
-" 
-" 	" Goto first line and delete it
-" 	goto
-" 	delete
-" 
-" 	" Set the buffer properties
-" 
-" 	let s:name = a:arg . "(MANPAGE)"
-" 	silent exe "file " . s:name
-" 
-" 	setlocal buftype=nofile
-" 	setlocal noswapfile
-" 	setlocal nowrap
-" 	setlocal nomodifiable
-" 	setlocal filetype=man
-" 
-" endfunction
-" 
-" command! -nargs=1 -complete=shellcmd Man call s:ReadMan(<q-args>)
 
 
 " only if GUI running
 if has("gui_running")
-	"colorscheme desert
+	colorscheme topfunky-light
 	set visualbell            " don't make noise
 	set cursorline            " highlight current line
 	set guifont=monospace\ 10
 	set guioptions-=r         "remove the right-hand scrollbar
-	"set guioptions-=m        "remove the menubar
+	set guioptions-=m        "remove the menubar
 	set guioptions-=T         "remove the toolbar
 endif
-
 
 " Smalltalk files
 autocmd FileType st call FT_st()
@@ -205,6 +174,15 @@ function! FT_st()
 	retab 8
 endfunction
 
+
+" Remove trailing chars
+function! RemoveTrailingChars()
+	:%s/\s\+$//
+endfunction
+
+command! RemoveTailingChars :call RemoveTrailingChars()
+
+" LaTex functions and mapping
 autocmd Filetype tex call s:init_tex()
 
 function! s:init_tex()
@@ -236,14 +214,57 @@ function! s:view_pdf()
 	call system("evince " . s:filename)
 endfunction
 
-function! s:show_error(error) 
- 	" Open a new window
- 	wincmd n
- 	" Set the buffer properties
- 	silent exe "file Latex(error)"
-	call append(0, split(a:error, '\n'))
- 	setlocal buftype=nofile
- 	setlocal noswapfile
- 	setlocal nowrap
- 	setlocal nomodifiable
+function! s:map_env(key, name)
+	execute "vnoremap <buffer> <leader>ce" . a:key . " S\\begin{" . a:name .
+				\ "}<CR>\\end{" . a:name . "}<ESC>P"
 endfunction
+
+"	imap ,igr \includegraphics{}<ESC>i
+"	vmap ,igr s\includegraphics{<ESC>pa}
+"
+"	imap ,fig \begin{figure}<CR>\end{figure}<ESC>O
+"	vmap ,fig S\begin{figure}<CR>\end{figure}<ESC>P
+
+function! s:show_error(error)
+	" Open a new window
+	wincmd n
+	" Set the buffer properties
+	silent exe "file Latex(error)"
+	call append(0, split(a:error, '\n'))
+	setlocal buftype=nofile
+	setlocal noswapfile
+	setlocal nowrap
+	setlocal nomodifiable
+endfunction
+
+
+" Bundle management on top of fugitive
+" Toggle activated bundles using dir linking
+" from "bundle-available" to "bundle"
+
+function! s:available_bundle_dirs()
+	return globpath(s:vimfiles() . "/bundle-available", "*")
+endfunction
+
+function! s:available_bundles()
+	return s:bundles_from_paths(s:available_bundle_dirs())
+endfunction
+
+function! s:bundles_from_paths(list)
+	let s:paths   = split(a:list, '\n')
+	let s:bundles = []
+	for path in s:paths
+		call add(s:bundles, substitute(path, "\.*/", "", ""))
+	endfor
+	return s:bundles
+endfunction
+
+function! s:vimfiles()
+	if(has("win32"))
+		return $HOME . "\_vim"
+	else
+		return $HOME . "/.vim"
+	endif
+endfunction
+
+command! BundleAvailable echo s:available_bundles()
