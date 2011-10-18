@@ -8,7 +8,7 @@ endif
 
 let g:colors_name="vilight"
 
-hi Normal         guifg=#b6b6b6           guibg=#212121
+hi Normal         guifg=#ffffff           guibg=#030303
 hi Cursor         guifg=#212121           guibg=#9ca9b7
 hi CursorLine	  guifg=#ffffff		      guibg=#6c8095
 hi Directory      guifg=#6c8095            guibg=NONE

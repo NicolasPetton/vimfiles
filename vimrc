@@ -70,10 +70,11 @@ set laststatus=2                  " always show the status line
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
-" colorscheme desert
+colorscheme vilight
 " 256 colors in terminal
-" set t_Co=256
-
+set t_Co=256
+"CSApprox settings  for better looking colorchemes in terminals
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 
 " mappings
 
