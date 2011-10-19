@@ -134,14 +134,8 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 nnoremap <Leader>fe :FufFileWithCurrentBufferDir<enter>
 nnoremap <Leader>fb :FufBuffer<enter>
 
-
-"Tabularize
-if exists(":Tabularize")
-	nnoremap <Leader>t= :Tabularize /=<CR>
-	vnoremap <Leader>t= :Tabularize /=<CR>
-	nnoremap <Leader>t: :Tabularize /:\zs<CR>
-	vnoremap <Leader>t: :Tabularize /:\zs<CR>
-endif
+"Gundo
+nnoremap <leader>u :GundoToggle<CR>
 
 "Show/hide invisible characters
 nnoremap <leader>l :set list!<CR>
@@ -155,7 +149,6 @@ runtime ftplugin/man.vim
 
 " only if GUI running
 if has("gui_running")
-	colorscheme topfunky-light
 	set visualbell            " don't make noise
 	set cursorline            " highlight current line
 	set guifont=monospace\ 10
@@ -165,9 +158,9 @@ if has("gui_running")
 endif
 
 " Smalltalk files
-autocmd FileType st call FT_st()
+autocmd FileType st call s:smalltalk_filetype()
 
-function! FT_st()
+function! s:smalltalk_filetype()
 	set tabstop=8
 	set softtabstop=4
 	set shiftwidth=4
@@ -175,13 +168,16 @@ function! FT_st()
 	retab 8
 endfunction
 
+" Help files
+autocmd FileType help call s:help_filetype()
 
-" Remove trailing chars
-function! RemoveTrailingChars()
-	:%s/\s\+$//
+function! s:help_filetype()
+	nnoremap <buffer> <CR> <C-]>
+	nnoremap <buffer> <BS> <C-T>
 endfunction
 
-command! RemoveTailingChars :call RemoveTrailingChars()
+" Remove trailing chars
+command! RemoveTailingChars :%s/\s\+$/
 
 " LaTex functions and mapping
 autocmd Filetype tex call s:init_tex()

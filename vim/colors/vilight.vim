@@ -100,7 +100,7 @@ hi cssCommonAttr  guifg=#cf6a4c guibg=NONE gui=NONE
 hi cssBraces  guifg=NONE guibg=NONE gui=NONE
 "diff
 
-hi DiffAdd        guifg=#8f9d6a          guibg=NONE
-hi DiffChange     guifg=#cda869          guibg=NONE
-hi DiffText       guifg=#b6b6b6          guibg=NONE
-hi DiffDelete     guifg=#cf6a4c          guibg=NONE
+hi DiffAdd        guifg=#ffffff          guibg=#8f9d6a
+hi DiffChange     guifg=#000000          guibg=#cda869
+hi DiffText       guifg=#000000          guibg=#b6b6b6
+hi DiffDelete     guifg=#ffffff          guibg=#cf5c39
