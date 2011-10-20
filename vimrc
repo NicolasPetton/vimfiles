@@ -25,6 +25,12 @@ set nowritebackup
 "Create ~/.vim/tmp/ and ~/.vim/undofiles/ if necessary
 set directory=$HOME/.vim/tmp//,.  " keep swap files in one place
 
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+\   exe "normal! g'\"" |
+\ endif
+
 "Permanent undo
 if v:version >= 703
     set undodir=~/.vim/undofiles
@@ -71,6 +77,7 @@ set laststatus=2                  " always show the status line
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 colorscheme vilight
+
 " 256 colors in terminal
 set t_Co=256
 "CSApprox settings  for better looking colorchemes in terminals
@@ -146,6 +153,10 @@ set listchars=tab:▸\ ,eol:¬,trail:☠
 " Read manpages from VIM
 runtime ftplugin/man.vim
 
+" vimhelp notes.
+" Set the runtimepath
+let &rtp = &rtp . ",~/notes"
+autocmd BufWritePost ~/notes/* :helptags ~/notes/doc
 
 " only if GUI running
 if has("gui_running")
