@@ -14,6 +14,8 @@ filetype plugin on
 filetype indent on
 syntax on
 
+set encoding=utf-8
+
 " reload .vimrc file when saving it
 autocmd! bufwritepost .vimrc source $MYVIMRC
 
