@@ -17,7 +17,7 @@ hi Folded         guifg=#9ca9b7           guibg=NONE        gui=italic
 hi FoldColumn	  guifg=#9ca9b7           guibg=NONE        gui=italic
 hi vimFold	      guifg=#dee4ea		      guibg=NONE        gui=italic
 hi IncSearch      guifg=#212121           guibg=#b6b6b6
-hi LineNr         guifg=#424242           guibg=NONE
+hi LineNr         guifg=#424242           guibg=#0a0a0a
 hi ModeMsg        guifg=#8f9d6a           guibg=NONE
 hi MoreMsg        guifg=#8f9d6a           guibg=NONE
 hi NonText        guifg=#424242           guibg=NONE
