@@ -158,8 +158,11 @@ runtime ftplugin/man.vim
 
 " vimhelp notes.
 " Set the runtimepath
-let &rtp = &rtp . ",~/notes"
-autocmd BufWritePost ~/notes/* :helptags ~/notes/doc
+"let &rtp = &rtp . ',~/notes'
+"autocmd BufWritePost ~/notes/* :helptags ~/notes/doc
+
+" vim-notes configuration for more complex note taking
+let g:notes_directory = '~/notes'
 
 " only if GUI running
 if has("gui_running")
